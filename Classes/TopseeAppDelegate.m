@@ -7,6 +7,7 @@
 //
 
 #import "TopseeAppDelegate.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @implementation TopseeAppDelegate
 
@@ -17,6 +18,10 @@
 
     // Override point for customization after application launch
     [window makeKeyAndVisible];
+	
+	// Play the intro movie
+	MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
+	[moviePlayer play];
 }
 
 
