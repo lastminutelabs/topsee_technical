@@ -10,6 +10,7 @@
 
 @interface TopseeAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
+	UIImageView *movieFirstFrame;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

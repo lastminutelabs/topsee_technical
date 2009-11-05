@@ -13,15 +13,17 @@
 
 @synthesize window;
 
-
-- (void)applicationDidFinishLaunching:(UIApplication *)application {    
+- (void)applicationDidFinishLaunching:(UIApplication *)application {
 
     // Override point for customization after application launch
+	movieFirstFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+	[window addSubview:movieFirstFrame];
     [window makeKeyAndVisible];
 	
 	// Play the intro movie
 	MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
 	moviePlayer.movieControlMode = MPMovieControlModeHidden;
+	moviePlayer.backgroundColor = [UIColor clearColor];
 	[moviePlayer play];
 	
 	// Keep the ui rotated correctly
@@ -34,6 +36,5 @@
     [window release];
     [super dealloc];
 }
-
 
 @end
