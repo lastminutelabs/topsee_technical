@@ -21,6 +21,7 @@
 	
 	// Play the intro movie
 	MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
+	moviePlayer.movieControlMode = MPMovieControlModeHidden;
 	[moviePlayer play];
 	
 	// Keep the ui rotated correctly
