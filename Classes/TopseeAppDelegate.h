@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface TopseeAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
+    
+    MPMoviePlayerController *moviePlayer;
 	UIImageView *movieFirstFrame;
 }
 

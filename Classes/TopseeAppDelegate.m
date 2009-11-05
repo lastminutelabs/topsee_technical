@@ -7,7 +7,6 @@
 //
 
 #import "TopseeAppDelegate.h"
-#import <MediaPlayer/MediaPlayer.h>
 
 @implementation TopseeAppDelegate
 
@@ -15,9 +14,9 @@
 
 // When the playback finishes, loop the movie
 - (void) moviePlayBackDidFinish:(NSNotification*)notification {
-	MPMoviePlayerController *moviePlayer = (MPMoviePlayerController *)notification.object;
-	moviePlayer.initialPlaybackTime = 0.0f;
-	[moviePlayer play];
+	MPMoviePlayerController *player = (MPMoviePlayerController *)notification.object;
+	player.initialPlaybackTime = 0.0f;
+	[player play];
 	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
@@ -30,7 +29,7 @@
     [window makeKeyAndVisible];
 	
 	// Play the intro movie
-	MPMoviePlayerController *moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
+	moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
 	moviePlayer.movieControlMode = MPMovieControlModeHidden;
 	moviePlayer.backgroundColor = [UIColor clearColor];
 	[moviePlayer play];
@@ -44,10 +43,27 @@
 											 selector:@selector(moviePlayBackDidFinish:) 
 												 name:MPMoviePlayerPlaybackDidFinishNotification 
 											   object:moviePlayer];
+    
+    // Pretend that we are finding our location or talking to the server or somethin
+    [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(startupComplete:) userInfo:nil repeats:NO];
 }
 
+- (void) startupComplete:(NSTimer *)timer {
+	// Stop listening to the movie player
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:moviePlayer];
+    [moviePlayer stop];
+    [moviePlayer release];
+    moviePlayer = nil;
+    
+    // Remove the first frame image and reveal the ui
+    [movieFirstFrame removeFromSuperview];
+}
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayer];
+    [moviePlayer release];
     [window release];
     [super dealloc];
 }
