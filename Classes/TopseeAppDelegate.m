@@ -13,6 +13,15 @@
 
 @synthesize window;
 
+// When the playback finishes, loop the movie
+- (void) moviePlayBackDidFinish:(NSNotification*)notification {
+	MPMoviePlayerController *moviePlayer = (MPMoviePlayerController *)notification.object;
+	moviePlayer.initialPlaybackTime = 0.0f;
+	[moviePlayer play];
+	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+}
+
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 
     // Override point for customization after application launch
@@ -29,6 +38,12 @@
 	// Keep the ui rotated correctly
 	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
+	
+	// Listen to the movie's notifications
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(moviePlayBackDidFinish:) 
+												 name:MPMoviePlayerPlaybackDidFinishNotification 
+											   object:moviePlayer];
 }
 
 
