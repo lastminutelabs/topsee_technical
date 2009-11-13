@@ -17,7 +17,6 @@
 	MPMoviePlayerController *player = (MPMoviePlayerController *)notification.object;
 	player.initialPlaybackTime = 0.0f;
 	[player play];
-	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
 
@@ -29,13 +28,12 @@
     [window makeKeyAndVisible];
 	
 	// Play the intro movie
-	moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"intro_animation" ofType:@"mov"]]];
+	moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"idea4-turned" ofType:@"m4v"]]];
 	moviePlayer.movieControlMode = MPMovieControlModeHidden;
 	moviePlayer.backgroundColor = [UIColor clearColor];
 	[moviePlayer play];
 	
 	// Keep the ui rotated correctly
-	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 	
 	// Listen to the movie's notifications
