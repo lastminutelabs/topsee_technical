@@ -17,6 +17,7 @@
 	MPMoviePlayerController *player = (MPMoviePlayerController *)notification.object;
 	player.initialPlaybackTime = 0.0f;
 	[player play];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 }
 
@@ -31,9 +32,11 @@
 	moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"idea4-turned" ofType:@"m4v"]]];
 	moviePlayer.movieControlMode = MPMovieControlModeHidden;
 	moviePlayer.backgroundColor = [UIColor clearColor];
+    moviePlayer.scalingMode = MPMovieScalingModeNone;
 	[moviePlayer play];
 	
 	// Keep the ui rotated correctly
+    [[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
 	[[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
 	
 	// Listen to the movie's notifications
@@ -43,7 +46,7 @@
 											   object:moviePlayer];
     
     // Pretend that we are finding our location or talking to the server or somethin
-    [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(startupComplete:) userInfo:nil repeats:NO];
+    //[NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(startupComplete:) userInfo:nil repeats:NO];
 }
 
 - (void) startupComplete:(NSTimer *)timer {
